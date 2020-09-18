@@ -29,8 +29,10 @@ body {
 }
 
 #screen_container {
+    position: relative;
+    width: 69%;
     height: calc(100vh - 220px);
-    width: auto;
+
     border-radius: 5px;
     background: #2c2c2c99;
     margin: 0px 20px 20px 20px;
@@ -39,8 +41,9 @@ body {
 }
 
 #video_container {
-    height: 100%;
-
+    position: absolute;
+    height: calc(100% - 10px);
+    width: calc(100% - 10px);
     border-radius: 5px;
 }
 
