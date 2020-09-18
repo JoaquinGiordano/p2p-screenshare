@@ -7,6 +7,11 @@ let roomId
 
 document.querySelector('#full_screen_button').style.display = 'none'
 
+if (navigator.userAgent.indexOf('Firefox') >= 1) {
+    document.querySelector('#video_container').style.width = '100%'
+} else {
+    document.querySelector('#screen_container').style.width = '80%'
+}
 peer.on('open', (id) => {
     document.querySelector('#id_container').innerHTML = `Tu ID: ${id}`
     roomId = id
@@ -19,6 +24,7 @@ peer.on('call', (call) => {
         document.querySelector('#full_screen_button').style.display = 'block'
         document.querySelector('#start_button').style.display = 'none'
         document.querySelector('#dest_id').style.display = 'none'
+        document.querySelector('#screen_container').style.width = null
         document.querySelector(
             '#id_container'
         ).innerHTML = `ID de la sala: ${call.peer}`
@@ -39,7 +45,11 @@ const createCall = () => {
                     autoGainControl: false,
                     noiseSuppresion: false,
                 },
-                video: { height: 1080, width: 1920, frameRate: 60 },
+                video: {
+                    width: 1920,
+                    height: 1080,
+                    frameRate: 120,
+                },
             })
             .then((stream) => {
                 screenShareStream = stream
@@ -48,6 +58,7 @@ const createCall = () => {
                     stream
                 )
                 document.querySelector('#video_container').volume = 0
+                document.querySelector('#screen_container').style.width = null
                 document.querySelector('#video_container').srcObject = stream
                 document.querySelector('#full_screen_button').style.display =
                     'block'
