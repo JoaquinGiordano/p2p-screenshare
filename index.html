@@ -3,21 +3,22 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>ScreenShare</title>
+        <title>P2P Screenshare</title>
         <link rel="stylesheet" href="index.css" />
+        <link rel="icon" href="./icon.png" />
     </head>
     <body>
-        <h1 id="id_container"></h1>
+        <h1 id="id_container">Cargando...</h1>
         <div id="screen_container">
             <video id="video_container" autoplay="true" />
         </div>
         <div id="bottom_bar">
-            <input id="dest_id" placeholder="ID de otra persona" type="text" />
+            <input id="dest_id" placeholder="ID de otro usuario" type="text" />
             <button id="start_button" onclick="createCall()">
-                Compartir Pantalla
+                <img src="icons/add_user.svg" alt="" srcset="" />
             </button>
             <button id="full_screen_button" onclick="setFullScreen()">
-                Pantalla Completa
+                <img src="icons/fullscreen.svg" alt="" srcset="" />
             </button>
         </div>
 

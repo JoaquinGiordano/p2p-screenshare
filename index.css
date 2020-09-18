@@ -1,5 +1,10 @@
+@font-face {
+    font-family: montserrat;
+    src: url('./fonts/montserrat.ttf');
+}
+
 * {
-    font-family: Arial;
+    font-family: Montserrat;
 }
 
 body {
@@ -11,17 +16,24 @@ body {
     align-items: center;
     width: 100%;
     height: 100vh;
-    background: #1f1f1f;
+    background: rgb(194, 194, 194);
+    background: linear-gradient(335deg, #881f56 0%, #e99166 100%);
     color: #ffffff;
 }
 
-#screen_container {
-    height: calc(100% - 200px);
-    width: calc(100% - 60px);
-    padding: 10px;
-    background-color: #353535;
-    margin-bottom: 20px;
+#id_container {
+    background: #2c2c2c99;
+    padding: 12px;
     border-radius: 5px;
+}
+
+#screen_container {
+    height: calc(100% - 220px);
+    border-radius: 5px;
+    background: #2c2c2c99;
+    margin: 0px 20px 20px 20px;
+
+    padding: 5px;
 }
 
 #video_container {
@@ -44,16 +56,16 @@ input {
     height: 25px;
     border-radius: 3px;
     padding: 5px;
-    background-color: #353535;
+    background-color: #35353599;
     outline: none;
 }
 
 button {
     color: white;
     font-size: 16px;
-    background: #353535;
+    background: #35353599;
 
-    width: 200px;
+    width: 35px;
     border-radius: 3px;
     height: 35px;
     border: none;

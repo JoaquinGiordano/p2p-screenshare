@@ -51,8 +51,7 @@ const createCall = () => {
                 document.querySelector('#video_container').srcObject = stream
                 document.querySelector('#full_screen_button').style.display =
                     'block'
-                document.querySelector('#start_button').innerHTML =
-                    'Añadir persona'
+
                 document.querySelector('#dest_id').value = ''
                 document.querySelector(
                     '#id_container'
@@ -65,7 +64,6 @@ const createCall = () => {
         )
         document.querySelector('#video_container').srcObject = screenShareStream
         document.querySelector('#full_screen_button').style.display = 'block'
-        document.querySelector('#start_button').innerHTML = 'Añadir persona'
         document.querySelector('#dest_id').value = ''
         document.querySelector(
             '#id_container'
