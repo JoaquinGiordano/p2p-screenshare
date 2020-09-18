@@ -44,7 +44,7 @@ const createConnection = () => {
 const createCall = () => {
     if (!screenShareStream) {
         navigator.mediaDevices
-            .getDisplayMedia({ audio: false, video: true })
+            .getDisplayMedia({ audio: true, video: true })
             .then((stream) => {
                 screenShareStream = stream
                 actual_call = peer.call(
