@@ -42,23 +42,38 @@ const createConnection = () => {
 }
 
 const createCall = () => {
-    navigator.mediaDevices
-        .getDisplayMedia({ audio: false, video: true })
-        .then((stream) => {
-            screenShareStream = stream
-            actual_call = peer.call(
-                document.querySelector('#dest_id').value,
-                stream
-            )
-            document.querySelector('#video_container').srcObject = stream
-            document.querySelector('#full_screen_button').style.display =
-                'block'
-            document.querySelector('#start_button').innerHTML = 'Añadir persona'
-            document.querySelector('#dest_id').value = ''
-            document.querySelector(
-                '#id_container'
-            ).innerHTML = `ID de la sala: ${roomId}`
-        })
+    if (!screenShareStream) {
+        navigator.mediaDevices
+            .getDisplayMedia({ audio: false, video: true })
+            .then((stream) => {
+                screenShareStream = stream
+                actual_call = peer.call(
+                    document.querySelector('#dest_id').value,
+                    stream
+                )
+                document.querySelector('#video_container').srcObject = stream
+                document.querySelector('#full_screen_button').style.display =
+                    'block'
+                document.querySelector('#start_button').innerHTML =
+                    'Añadir persona'
+                document.querySelector('#dest_id').value = ''
+                document.querySelector(
+                    '#id_container'
+                ).innerHTML = `ID de la sala: ${roomId}`
+            })
+    } else {
+        actual_call = peer.call(
+            document.querySelector('#dest_id').value,
+            screenShareStream
+        )
+        document.querySelector('#video_container').srcObject = screenShareStream
+        document.querySelector('#full_screen_button').style.display = 'block'
+        document.querySelector('#start_button').innerHTML = 'Añadir persona'
+        document.querySelector('#dest_id').value = ''
+        document.querySelector(
+            '#id_container'
+        ).innerHTML = `ID de la sala: ${roomId}`
+    }
 }
 
 const setFullScreen = () => {
