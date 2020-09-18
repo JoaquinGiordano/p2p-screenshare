@@ -12,11 +12,6 @@ peer.on('open', (id) => {
     roomId = id
 })
 
-peer.on('connection', (conn) => {
-    actual_conn = conn
-    console.log(actual_conn)
-})
-
 peer.on('call', (call) => {
     call.answer(null)
     call.on('stream', (stream) => {
@@ -37,7 +32,15 @@ const createConnection = () => {
 const createCall = () => {
     if (!screenShareStream) {
         navigator.mediaDevices
-            .getDisplayMedia({ audio: true, video: true })
+            .getDisplayMedia({
+                audio: {
+                    echoCancellation: false,
+                    googAutoGainControl: false,
+                    autoGainControl: false,
+                    noiseSuppresion: false,
+                },
+                video: { height: 1080, width: 1920, frameRate: 60 },
+            })
             .then((stream) => {
                 screenShareStream = stream
                 actual_call = peer.call(
