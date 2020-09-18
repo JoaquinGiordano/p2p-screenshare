@@ -18,23 +18,16 @@ peer.on('connection', (conn) => {
 })
 
 peer.on('call', (call) => {
-    if (
-        confirm(
-            'Alguien esta intentando compartir su pantalla contigo, aceptas?'
-        )
-    ) {
-        call.answer(null)
-        call.on('stream', (stream) => {
-            document.querySelector('#video_container').srcObject = stream
-            document.querySelector('#full_screen_button').style.display =
-                'block'
-            document.querySelector('#start_button').style.display = 'none'
-            document.querySelector('#dest_id').style.display = 'none'
-            document.querySelector(
-                '#id_container'
-            ).innerHTML = `ID de la sala: ${call.peer}`
-        })
-    }
+    call.answer(null)
+    call.on('stream', (stream) => {
+        document.querySelector('#video_container').srcObject = stream
+        document.querySelector('#full_screen_button').style.display = 'block'
+        document.querySelector('#start_button').style.display = 'none'
+        document.querySelector('#dest_id').style.display = 'none'
+        document.querySelector(
+            '#id_container'
+        ).innerHTML = `ID de la sala: ${call.peer}`
+    })
 })
 
 const createConnection = () => {
