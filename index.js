@@ -44,6 +44,7 @@ const createCall = () => {
                     document.querySelector('#dest_id').value,
                     stream
                 )
+                document.querySelector('#video_container').volume = 0
                 document.querySelector('#video_container').srcObject = stream
                 document.querySelector('#full_screen_button').style.display =
                     'block'
