@@ -9,22 +9,17 @@
     <body>
         <h1 id="id_container"></h1>
         <div id="screen_container">
-            <video
-                id="video_container"
-                autoplay="true"
-                width="480"
-                height="270"
-            />
+            <video id="video_container" autoplay="true" />
         </div>
-
-        <input id="dest_id" placeholder="ID de otra persona" type="text" />
-        <button id="start_button" onclick="createCall()">
-            Compartir Pantalla
-        </button>
-        <button id="full_screen_button" onclick="setFullScreen()">
-            Pantalla Completa
-        </button>
-        <br />
+        <div id="bottom_bar">
+            <input id="dest_id" placeholder="ID de otra persona" type="text" />
+            <button id="start_button" onclick="createCall()">
+                Compartir Pantalla
+            </button>
+            <button id="full_screen_button" onclick="setFullScreen()">
+                Pantalla Completa
+            </button>
+        </div>
 
         <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
         <script src="./index.js"></script>
