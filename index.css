@@ -28,8 +28,19 @@ body {
     border-radius: 5px;
 }
 
+#copy_input {
+    position: absolute;
+    border: none !important;
+    width: 0px;
+    height: 0px;
+    opacity: 0;
+}
+
 #screen_container {
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 69%;
     height: calc(100vh - 220px);
 
@@ -52,6 +63,44 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
+}
+
+#join_request_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #2c2c2c4d;
+    width: 80%;
+    height: 300px;
+    border-radius: 5px;
+}
+
+.join_request_button {
+    width: 200px;
+    margin-bottom: 10px;
+    transition: all 0.4s ease;
+    -webkit-transition: all 0.4s ease;
+}
+
+.accept {
+    background: #00ff0057;
+}
+
+.accept:hover {
+    background: #00ff0080;
+    transition: all 0.4s ease;
+    -webkit-transition: all 0.4s ease;
+}
+
+.deny {
+    background: #ff000057;
+}
+
+.deny:hover {
+    background: #ff000080;
+    transition: all 0.4s ease;
+    -webkit-transition: all 0.4s ease;
 }
 
 input {

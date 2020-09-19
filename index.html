@@ -8,10 +8,9 @@
         <link rel="icon" href="./icon.png" />
     </head>
     <body>
-        <h1 id="id_container">Cargando...</h1>
-        <div id="screen_container">
-            <video id="video_container" autoplay="true" />
-        </div>
+        <input type="text" id="copy_input" />
+        <h1 id="id_container" onclick="copyURL()">Cargando...</h1>
+        <div id="screen_container"></div>
         <div id="bottom_bar">
             <input id="dest_id" placeholder="Room ID" type="text" />
             <button id="start_button" onclick="createCall()">Unirse</button>

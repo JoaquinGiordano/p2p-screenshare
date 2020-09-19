@@ -5,12 +5,59 @@ var actual_call
 let screenShareStream
 let roomId
 
+const pageParamsStr = window.location.search
+const parsedParams = new URLSearchParams(pageParamsStr)
+
 document.querySelector('#full_screen_button').style.display = 'none'
 
 peer.on('open', (id) => {
     document.querySelector('#id_container').innerHTML = `Room ID: ${id}`
     roomId = id
+
+    if (parsedParams.get('roomid')) {
+        loadJoinRequest(parsedParams.get('roomid'))
+    } else {
+        loadScreen()
+    }
 })
+
+const loadJoinRequest = (id) => {
+    document.querySelector(
+        '#screen_container'
+    ).innerHTML = `<div id="join_request_container"><h2>¿Deseas entrar a esta sala?</h2><div><button onclick="acceptCall('${id}')" class="join_request_button accept">Aceptar</button><button onclick="denyCall()" class="join_request_button deny">Cancelar</button></div></div>`
+}
+
+const loadScreen = () => {
+    document.querySelector(
+        '#screen_container'
+    ).innerHTML = `<video id="video_container" autoplay="true" />`
+}
+
+const acceptCall = (id) => {
+    console.log(id)
+    createCall(id)
+}
+
+const denyCall = () => {
+    loadScreen()
+}
+
+const copyURL = () => {
+    if (parsedParams.get('roomid')) {
+        document.querySelector(
+            '#copy_input'
+        ).value = `https://joaquingiordano.github.io/p2p-screenshare?roomid=${parsedParams.get(
+            'roomid'
+        )}`
+    } else {
+        document.querySelector(
+            '#copy_input'
+        ).value = `https://joaquingiordano.github.io/p2p-screenshare?roomid=${roomId}`
+    }
+
+    document.querySelector('#copy_input').select()
+    document.execCommand('copy')
+}
 
 peer.on('call', (call) => {
     if (!screenShareStream) {
@@ -31,13 +78,10 @@ peer.on('call', (call) => {
             .then((stream) => {
                 call.answer(stream)
                 screenShareStream = stream
-                console.log(call)
-
                 document.querySelector('#video_container').volume = 0
                 document.querySelector('#video_container').srcObject = stream
                 document.querySelector('#full_screen_button').style.display =
                     'block'
-
                 document.querySelector('#dest_id').value = ''
                 document.querySelector(
                     '#id_container'
@@ -53,7 +97,7 @@ const createConnection = () => {
     actual_conn = peer.connect(document.querySelector('#dest_id').value)
 }
 
-const createCall = () => {
+const createCall = (id) => {
     //Creating Empty Stream
 
     const createEmptyVideoTrack = ({ width, height }) => {
@@ -71,17 +115,24 @@ const createCall = () => {
         createEmptyVideoTrack({ width: 0, height: 0 }),
     ])
 
-    actual_call = peer.call(
-        document.querySelector('#dest_id').value,
-        mediaStream
-    )
+    if (id) {
+        loadScreen()
+        actual_call = peer.call(id, mediaStream)
+        roomId = id
+    } else {
+        actual_call = peer.call(
+            document.querySelector('#dest_id').value,
+            mediaStream
+        )
+        roomId = document.querySelector('#dest_id').value
+    }
 
     actual_call.on('stream', (stream) => {
         document.querySelector('#video_container').srcObject = stream
         document.querySelector('#full_screen_button').style.display = 'block'
 
         document.querySelector('#dest_id').innerHTML = ''
-        roomId = document.querySelector('#dest_id').value
+
         document.querySelector('#id_container').innerHTML = `Room ID: ${roomId}`
     })
 }
