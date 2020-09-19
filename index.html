@@ -13,16 +13,14 @@
             <video id="video_container" autoplay="true" />
         </div>
         <div id="bottom_bar">
-            <input id="dest_id" placeholder="ID de otro usuario" type="text" />
-            <button id="start_button" onclick="createCall()">
-                <img src="icons/add_user.svg" alt="" srcset="" />
-            </button>
+            <input id="dest_id" placeholder="Room ID" type="text" />
+            <button id="start_button" onclick="createCall()">Unirse</button>
             <button id="full_screen_button" onclick="setFullScreen()">
                 <img src="icons/fullscreen.svg" alt="" srcset="" />
             </button>
-            <button id="settings_button" onclick="turnSettings()">
+            <!-- <button id="settings_button" onclick="turnSettings()">
                 <img src="icons/settings.svg" alt="" srcset="" />
-            </button>
+            </button>-->
         </div>
 
         <script src="./peerjs.min.js"></script>

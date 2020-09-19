@@ -1,35 +1,18 @@
 let peer = new Peer()
 let actual_conn
 
-let actual_call
+var actual_call
 let screenShareStream
 let roomId
 
 document.querySelector('#full_screen_button').style.display = 'none'
 
 peer.on('open', (id) => {
-    document.querySelector('#id_container').innerHTML = `Tu ID: ${id}`
+    document.querySelector('#id_container').innerHTML = `Room ID: ${id}`
     roomId = id
 })
 
 peer.on('call', (call) => {
-    call.answer(null)
-    call.on('stream', (stream) => {
-        document.querySelector('#video_container').srcObject = stream
-        document.querySelector('#full_screen_button').style.display = 'block'
-        document.querySelector('#start_button').style.display = 'none'
-        document.querySelector('#dest_id').style.display = 'none'
-        document.querySelector(
-            '#id_container'
-        ).innerHTML = `ID de la sala: ${call.peer}`
-    })
-})
-
-const createConnection = () => {
-    actual_conn = peer.connect(document.querySelector('#dest_id').value)
-}
-
-const createCall = () => {
     if (!screenShareStream) {
         navigator.mediaDevices
             .getDisplayMedia({
@@ -46,11 +29,10 @@ const createCall = () => {
                 },
             })
             .then((stream) => {
+                call.answer(stream)
                 screenShareStream = stream
-                actual_call = peer.call(
-                    document.querySelector('#dest_id').value,
-                    stream
-                )
+                console.log(call)
+
                 document.querySelector('#video_container').volume = 0
                 document.querySelector('#video_container').srcObject = stream
                 document.querySelector('#full_screen_button').style.display =
@@ -59,20 +41,49 @@ const createCall = () => {
                 document.querySelector('#dest_id').value = ''
                 document.querySelector(
                     '#id_container'
-                ).innerHTML = `ID de la sala: ${roomId}`
+                ).innerHTML = `Room ID: ${roomId}`
             })
     } else {
-        actual_call = peer.call(
-            document.querySelector('#dest_id').value,
-            screenShareStream
-        )
-        document.querySelector('#video_container').srcObject = screenShareStream
-        document.querySelector('#full_screen_button').style.display = 'block'
+        call.answer(screenShareStream)
         document.querySelector('#dest_id').value = ''
-        document.querySelector(
-            '#id_container'
-        ).innerHTML = `ID de la sala: ${roomId}`
     }
+})
+
+const createConnection = () => {
+    actual_conn = peer.connect(document.querySelector('#dest_id').value)
+}
+
+const createCall = () => {
+    //Creating Empty Stream
+
+    const createEmptyVideoTrack = ({ width, height }) => {
+        const canvas = Object.assign(document.createElement('canvas'), {
+            width,
+            height,
+        })
+        canvas.getContext('2d').fillRect(0, 0, width, height)
+        const stream = canvas.captureStream()
+        const track = stream.getVideoTracks()[0]
+        return Object.assign(track, { enabled: false })
+    }
+
+    const mediaStream = new MediaStream([
+        createEmptyVideoTrack({ width: 0, height: 0 }),
+    ])
+
+    actual_call = peer.call(
+        document.querySelector('#dest_id').value,
+        mediaStream
+    )
+
+    actual_call.on('stream', (stream) => {
+        document.querySelector('#video_container').srcObject = stream
+        document.querySelector('#full_screen_button').style.display = 'block'
+
+        document.querySelector('#dest_id').innerHTML = ''
+        roomId = document.querySelector('#dest_id').value
+        document.querySelector('#id_container').innerHTML = `Room ID: ${roomId}`
+    })
 }
 
 const setFullScreen = () => {
